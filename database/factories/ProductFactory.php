@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Category;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -20,7 +21,8 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->name(),
             'price' => fake()->numberBetween(10000, 50000),
-            'category_id' => Category::inRandomOrder()->pluck('id')->first()
+            'category_id' => Category::inRandomOrder()->pluck('id')->first(),
+            'created_by' => User::inRandomOrder()->pluck('id')->first()
             // 'category_id' => Category::query()->inRandomOrder()->first()->id
         ];
     }
