@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+// use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Product extends Model
 {
@@ -23,8 +24,13 @@ class Product extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function rating(): MorphOne
+    // public function rating(): MorphOne
+    // {
+    //     return $this->morphOne(Rating::class, 'rateable');
+    // }
+
+    public function ratings(): MorphMany
     {
-        return $this->morphOne(Rating::class, 'rateable');
+        return $this->morphMany(Rating::class, 'rateable');
     }
 }

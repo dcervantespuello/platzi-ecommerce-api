@@ -33,5 +33,13 @@ Route::get('/', function () {
     // $rating = Rating::find(1);
     // dd($product->rating, $user->rating, $rating->rateable, $rating->qualifier);
 
+    /**
+     * Ejercicio de relación uno a muchos polimórfica
+     */
+    // $product = Product::find(2);
+    // $user = User::find(1);
+    // $rating = Rating::find(2);
+    // dd($product->ratings, $user->ratings, $rating->rateable, $rating->qualifier);
+
     return view('welcome');
 });

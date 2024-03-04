@@ -8,7 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+// use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class User extends Authenticatable
 {
@@ -53,8 +54,13 @@ class User extends Authenticatable
         return $this->hasMany(Product::class, 'created_by');
     }
 
-    public function rating(): MorphOne
+    // public function rating(): MorphOne
+    // {
+    //     return $this->morphOne(Rating::class, 'qualifier');
+    // }
+
+    public function ratings(): MorphMany
     {
-        return $this->morphOne(Rating::class, 'qualifier');
+        return $this->morphMany(Rating::class, 'qualifier');
     }
 }
