@@ -16,7 +16,7 @@ return new class extends Migration
             $table->float('score');
             $table->morphs('rateable');
             $table->morphs('qualifier');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

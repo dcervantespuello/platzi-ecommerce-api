@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Rating extends Model
+class Rating extends Pivot
 {
     use HasFactory;
+
+    public $incrementing = true;
+
+    protected $table = 'ratings';
 
     public function rateable(): MorphTo
     {

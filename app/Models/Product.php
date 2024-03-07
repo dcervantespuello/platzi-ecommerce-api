@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 // use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+// use Illuminate\Database\Eloquent\Relations\MorphMany;
+use App\Utils\CanBeRated;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, CanBeRated;
 
     protected $guarded = [];
 
@@ -29,8 +30,8 @@ class Product extends Model
     //     return $this->morphOne(Rating::class, 'rateable');
     // }
 
-    public function ratings(): MorphMany
-    {
-        return $this->morphMany(Rating::class, 'rateable');
-    }
+    // public function ratings(): MorphMany
+    // {
+    //     return $this->morphMany(Rating::class, 'rateable');
+    // }
 }

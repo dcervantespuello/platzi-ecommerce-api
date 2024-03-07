@@ -9,11 +9,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 // use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+// use Illuminate\Database\Eloquent\Relations\MorphMany;
+use App\Utils\CanRate;
+use App\Utils\CanBeRated;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, CanRate, CanBeRated;
 
     /**
      * The attributes that are mass assignable.
@@ -59,8 +61,8 @@ class User extends Authenticatable
     //     return $this->morphOne(Rating::class, 'qualifier');
     // }
 
-    public function ratings(): MorphMany
-    {
-        return $this->morphMany(Rating::class, 'qualifier');
-    }
+    // public function ratings(): MorphMany
+    // {
+    //     return $this->morphMany(Rating::class, 'qualifier');
+    // }
 }
