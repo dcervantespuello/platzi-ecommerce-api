@@ -5,9 +5,9 @@ namespace App\Models;
 // use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
-class Rating extends Pivot
+class Rating extends MorphPivot
 {
     use HasFactory;
 
