@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserTokenController;
+use App\Http\Controllers\NewsletterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('sanctum/token', UserTokenController::class);
+
+Route::post('newsletter', [NewsletterController::class, 'send']);

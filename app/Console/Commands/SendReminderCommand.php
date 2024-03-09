@@ -42,7 +42,7 @@ class SendReminderCommand extends Command
             $this->output->progressStart();
 
             $builder->whereNull('email_verified_at')
-            ->whereDate('created_at', '<', Carbon::now()->subWeek())
+            ->whereDate('created_at', '<=', Carbon::now()->subWeek())
             ->each(function(User $user) {
                 $user->notify(new NewsletterNotification);
                 $this->output->progressAdvance();
