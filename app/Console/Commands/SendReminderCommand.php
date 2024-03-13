@@ -14,7 +14,9 @@ class SendReminderCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'send:reminder {emails?*}';
+    protected $signature = 'send:reminder
+                            {emails?* : Correos a los que se debe enviar directamente.}
+                            {--s|schedule : Opción para saber si se debe ejecutar directamente o no}';
 
     /**
      * The console command description.
@@ -29,6 +31,7 @@ class SendReminderCommand extends Command
     public function handle()
     {
         $emails = $this->argument('emails');
+        $schedule = $this->option('schedule');
 
         $builder = User::query();
 
@@ -36,22 +39,29 @@ class SendReminderCommand extends Command
             $builder->whereIn('email', $emails);
         }
 
+        $builder->whereNull('email_verified_at')
+        ->whereDate('created_at', '<=', Carbon::now()->subWeek());
+
         $count = $builder->count();
 
         if ($count) {
-            $this->output->progressStart();
+            $this->info("Se enviarán $count correos.");
 
-            $builder->whereNull('email_verified_at')
-            ->whereDate('created_at', '<=', Carbon::now()->subWeek())
-            ->each(function(User $user) {
-                $user->notify(new NewsletterNotification);
-                $this->output->progressAdvance();
-            });
+            if ($this->confirm("¿Está de acuerdo?") || $schedule) {
+                $this->output->progressStart();
 
-            $count = $builder->count();
-            $this->output->progressFinish();
+                $builder->each(function(User $user) {
+                    $user->notify(new NewsletterNotification);
+                    $this->output->progressAdvance();
+                });
+
+                $this->output->progressFinish();
+                $this->info("Se enviaron los correos con éxito.");
+            } else {
+                $this->info("No se envió ningún correo.");
+            }
+        } else {
+            $this->info("No se envió ningún correo.");
         }
-
-        $this->info($count ? "Se enviaron {$count} correos." : "No se envió ningún correo.");
     }
 }

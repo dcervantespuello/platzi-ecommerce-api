@@ -13,7 +13,9 @@ class SendNewsletterCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'send:newsletter {emails?*}';
+    protected $signature = 'send:newsletter
+                            {emails?* : Correos Electronicos a los cuales enviar directamente}
+                            {--s|schedule : Si debe ser ejecutado directamente o no}';
 
     /**
      * The console command description.
@@ -28,6 +30,7 @@ class SendNewsletterCommand extends Command
     public function handle()
     {
         $emails = $this->argument('emails');
+        $schedule = $this->option('schedule');
 
         $builder = User::query();
 
@@ -35,21 +38,27 @@ class SendNewsletterCommand extends Command
             $builder->whereIn('email', $emails);
         }
 
+        $builder->whereNotNull('email_verified_at');
         $count = $builder->count();
 
         if ($count) {
-            $this->output->progressStart();
+            $this->info("Se enviarán $count correos.");
 
-            $builder->whereNotNull('email_verified_at')
-                    ->each(function (User $user) {
-                        $user->notify(new NewsletterNotification);
-                        $this->output->progressAdvance();
-                    });
+            if ($this->confirm('¿Estás de acuerdo?') || $schedule) {
+                $this->output->progressStart();
 
-            $count = $builder->count();
-            $this->output->progressFinish();
+                $builder->each(function (User $user) {
+                            $user->notify(new NewsletterNotification);
+                            $this->output->progressAdvance();
+                        });
+
+                $this->output->progressFinish();
+                $this->info("Correos enviados con éxito.");
+            } else {
+                $this->info("No se envió ningún correo.");
+            }
+        } else {
+            $this->info("No se envió ningún correo.");
         }
-
-        $this->info($count ? "Se enviaron {$count} correos." : "No se envió ningún correo.");
     }
 }
