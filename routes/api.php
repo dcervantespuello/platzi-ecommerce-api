@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserTokenController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\QualificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('sanctum/token', UserTokenController::class);
 
 Route::post('newsletter', [NewsletterController::class, 'send']);
+
+Route::post('qualify/user/{id}', [QualificationController::class, 'rateUser']);
+
+Route::post('qualify/product/{id}', [QualificationController::class, 'rateProduct']);
