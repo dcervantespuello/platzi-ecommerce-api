@@ -38,3 +38,5 @@ Route::post('newsletter', [NewsletterController::class, 'send']);
 Route::post('qualify/user/{id}', [QualificationController::class, 'rateUser']);
 
 Route::post('qualify/product/{id}', [QualificationController::class, 'rateProduct']);
+
+Route::post('unrate/product/{id}', [QualificationController::class, 'unrateProduct']);

@@ -30,4 +30,19 @@ class QualificationController extends Controller
             'data' => "El usuario $qualifier->name calificó el producto $rateable->name."
         ]);
     }
+
+    public function unrateProduct($id)
+    {
+        $qualifier = User::inRandomOrder()->first();
+        $rateable = Product::find($id);
+
+        $success = "El usuario {$qualifier->name} retiró su calificación sobre el producto {$rateable->name}.";
+        $failure = "El usuario {$qualifier->name} no ha calificado el producto {$rateable->name}.";
+
+        $message = $qualifier->unrate($rateable) ? $success : $failure;
+
+        return response()->json([
+            'data' => $message
+        ]);
+    }
 }

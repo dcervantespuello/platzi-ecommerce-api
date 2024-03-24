@@ -69,4 +69,14 @@ class RatingTest extends TestCase
 		$this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user1->ratings(User::class)->get());
 		$this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user2->qualifiers(User::class)->get());
 	}
+
+    public function test_unrating_model()
+    {
+        $user = User::factory()->create();
+        $product = Product::factory()->create();
+
+        $user->rate($product, 5);
+
+        $this->assertTrue($user->unrate($product));
+    }
 }

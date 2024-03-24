@@ -8,6 +8,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Events\ModelRated;
 use App\Listeners\SendEmailModelRatedNotification;
+use App\Events\ModelUnrated;
+use App\Listeners\SendEmailModelUnratedNotification;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ModelRated::class => [
             SendEmailModelRatedNotification::class,
+        ],
+        ModelUnrated::class => [
+            SendEmailModelUnratedNotification::class,
         ]
     ];
 

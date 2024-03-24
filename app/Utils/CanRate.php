@@ -5,6 +5,7 @@ namespace App\Utils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use App\Events\ModelRated;
+use App\Events\ModelUnrated;
 
 trait CanRate
 {
@@ -54,11 +55,13 @@ trait CanRate
 
         $this->ratings($model->getMorphClass())->detach($model->getKey());
 
+        event(new ModelUnrated($this, $model));
+
         return true;
     }
 
     public function hasRated(Model $model): bool
     {
-        return !is_null($this->ratings($model)->find($model->getKey()));
+        return !is_null($this->ratings($model->getMorphClass())->where('rateable_id', $model->getKey())->first());
     }
 }

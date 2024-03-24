@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Models\Product;
-// use App\Models\User;
-// use App\Models\Rating;
+use App\Models\Product;
+use App\Models\User;
+use App\Models\Rating;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +23,9 @@ Route::get('/', function () {
     /**
      * Ejercicio de relación belongsTo y hasMany
      */
-    // $product = Product::find(1);
-    // $user = User::find(5);
-    // dd($product->user, $user->products);
+    // $product = Product::find(2);
+    // $user = User::find(4);
+    // dd($user->unrate($product));
 
     /**
      * Ejercicio de relación uno a uno polimórfica
