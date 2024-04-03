@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Jobs\UpdateLastLogin;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -34,8 +33,6 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        dispatch(new UpdateLastLogin(auth()->user()));
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

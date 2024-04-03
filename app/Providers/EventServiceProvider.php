@@ -10,6 +10,8 @@ use App\Events\ModelRated;
 use App\Listeners\SendEmailModelRatedNotification;
 use App\Events\ModelUnrated;
 use App\Listeners\SendEmailModelUnratedNotification;
+use Illuminate\Auth\Events\Login;
+use App\Jobs\UpdateLastLogin;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ModelUnrated::class => [
             SendEmailModelUnratedNotification::class,
+        ],
+        Login::class => [
+            UpdateLastLogin::class,
         ]
     ];
 
