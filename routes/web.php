@@ -16,6 +16,10 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/exception', function() {
+    throw new Exception('Soy una excepcion.');
+});
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
