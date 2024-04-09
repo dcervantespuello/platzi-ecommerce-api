@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use App\Events\ModelRated;
 use App\Events\ModelUnrated;
+use App\Exceptions\InvalidScore;
 
 trait CanRate
 {
@@ -35,6 +36,13 @@ trait CanRate
     {
         if ($this->hasRated($model)) {
             return false;
+        }
+
+        $from = config('rating.from');
+        $to = config('rating.to');
+
+        if ($score < $from || $score > $to) {
+            throw new InvalidScore($from, $to);
         }
 
         $this->ratings($model)->attach($model->getKey(), [

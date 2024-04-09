@@ -24,7 +24,8 @@ class QualificationController extends Controller
         $qualifier = User::inRandomOrder()->first();
         $rateable = Product::find($id);
 
-        $qualifier->rate($rateable, random_int(1, 5));
+        // $qualifier->rate($rateable, random_int(1, 5));
+        $qualifier->rate($rateable, 9);
 
         return response()->json([
             'data' => "El usuario $qualifier->name calificó el producto $rateable->name."
