@@ -19,6 +19,10 @@ use App\Http\Controllers\QualificationController;
 |
 */
 
+Route::get('server-error', function () {
+    abort(500);
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

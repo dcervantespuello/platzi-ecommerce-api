@@ -28,8 +28,8 @@ class Handler extends ExceptionHandler
             return response()->json($e->getMessage());
         });
 
-        $this->renderable(function (Throwable $e) {
-            return response()->json($e->getMessage());
-        });
+        // $this->renderable(function (Throwable $e) {
+        //     return response()->json($e->getMessage());
+        // });
     }
 }
