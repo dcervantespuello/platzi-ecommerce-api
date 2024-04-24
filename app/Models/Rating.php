@@ -24,4 +24,9 @@ class Rating extends MorphPivot
     {
         return $this->morphTo();
     }
+
+    public function approve()
+    {
+        $this->approved_at = now();
+    }
 }

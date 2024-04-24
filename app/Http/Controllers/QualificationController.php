@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Rating;
+use Illuminate\Support\Facades\Gate;
+use \App\Http\Resources\RatingResource;
+use Symfony\Component\HttpFoundation\Request;
 
 class QualificationController extends Controller
 {
@@ -45,5 +49,32 @@ class QualificationController extends Controller
         return response()->json([
             'data' => $message
         ]);
+    }
+
+    public function approve(Rating $rating)
+    {
+        Gate::authorize('admin', $rating);
+
+        $rating->approve();
+        $rating->save();
+
+        return response()->json();
+    }
+
+    public function list(Request $request)
+    {
+        Gate::authorize('admin');
+
+        $builder = Rating::query();
+
+        if ($request->has('approved')) {
+            $builder->whereNotNull('approved_at');
+        }
+
+        if ($request->has('notApproved')) {
+            $builder->whereNull('approved_at');
+        }
+
+        return RatingResource::collection($builder->get());
     }
 }

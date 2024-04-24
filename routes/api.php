@@ -27,20 +27,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-
-    Route::resource('products', ProductController::class);
-
-    Route::resource('categories', CategoryController::class);
-
-});
-
+Route::resource('products', ProductController::class);
+Route::resource('categories', CategoryController::class);
 Route::post('sanctum/token', UserTokenController::class);
 
-Route::post('newsletter', [NewsletterController::class, 'send']);
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::post('qualify/user/{id}', [QualificationController::class, 'rateUser']);
+    Route::post('newsletter', [NewsletterController::class, 'send']);
 
-Route::post('qualify/product/{id}', [QualificationController::class, 'rateProduct']);
+    Route::post('qualify/user/{id}', [QualificationController::class, 'rateUser']);
 
-Route::post('unrate/product/{id}', [QualificationController::class, 'unrateProduct']);
+    Route::post('qualify/product/{id}', [QualificationController::class, 'rateProduct']);
+
+    Route::post('unrate/product/{id}', [QualificationController::class, 'unrateProduct']);
+
+    Route::post('approve/rating/{rating}', [QualificationController::class, 'approve']);
+
+    Route::get('rating', [QualificationController::class, 'list']);
+});
